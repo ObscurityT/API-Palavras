@@ -28,5 +28,6 @@ Acesso usuario apenas para leituras (o que inclui as listas)
 
 ____
 
-De tempos em tempos farei alguma alteração no Readme do projeto...
-Não deixem de atualizar sua branch
+**⚠️ De tempos em tempos farei alguma alteração no Readme do projeto... ⚠️**
+
+**Não deixem de atualizar sua branch**
