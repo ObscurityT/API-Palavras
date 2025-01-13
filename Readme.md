@@ -16,9 +16,9 @@ ___
 
 ✔️ Busca de Palavras por Etiqueta
 
-✔️ Busca de Etiqueta por Palavras
+✔️ Busca de Etiquetas por Palavra
 
-✔️ TDD
+✔️ TDD (Opcional)
 
 ✔️ Segurança com JWT 
     Acesso admin para o CRUD completo 
