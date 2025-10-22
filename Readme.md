@@ -1,4 +1,6 @@
 ## Projeto API de Palavras
+
+### Dupla: Amanda Santos e Mariana Santos
 ___
 #### ⚠️ Cada dupla deve criar uma branch e fazer seus commits dentro dela
 #### ⚠️ Na branch da dupla deve ter um Readme com pelo menos os nomes dos integrantes da dupla e os endpoints criados
