@@ -10,7 +10,7 @@ ___
     Apenas um atributo (termo, por exemplo)
 
 ✔️ CRUD de Etiquetas 
-    Apenas um atributo (nome, por exemplo)
+    Apenas um atributo (nome, por exemplo!)
 
 ✔️ Relacionamento muitos-pra-muitos entre Etiqueta e Palavra
 
