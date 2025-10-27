@@ -1,4 +1,4 @@
 package com.amandamariana.apipalavras.controllers;
 
-public class etiquetaController {
+public class EtiquetaController {
 }
