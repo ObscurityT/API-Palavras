@@ -1,4 +1,4 @@
 package com.amandamariana.apipalavras.services;
 
-public class palavraService {
+public class EtiquetaService {
 }
