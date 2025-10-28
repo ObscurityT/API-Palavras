@@ -13,10 +13,13 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Etiqueta {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "nome", nullable = false)
     private String nome;
 
     @ManyToMany(mappedBy = "etiquetas")
