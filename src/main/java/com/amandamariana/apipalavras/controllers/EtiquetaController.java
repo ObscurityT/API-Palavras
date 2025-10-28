@@ -2,6 +2,7 @@ package com.amandamariana.apipalavras.controllers;
 
 import com.amandamariana.apipalavras.model.Etiqueta;
 import com.amandamariana.apipalavras.services.EtiquetaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @RequestMapping("api/v1/etiquetas")
 @RestController
 public class EtiquetaController {
 
-    private EtiquetaService etiquetaService;
+    private final EtiquetaService etiquetaService;
 
     @GetMapping
     public ResponseEntity<List<Etiqueta>> listar() {

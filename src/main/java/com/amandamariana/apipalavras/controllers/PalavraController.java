@@ -49,7 +49,7 @@ public class PalavraController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity updatePalavra(@PathVariable(value="id") Long id, @RequestBody @Valid PalavraRequestDTO data) {
-        if(id.equals(data.id())){
+        if(id.equals(data.getId())){
             Optional<Palavra> optionalPalavra = palavraRepository.findById(id);
             if (optionalPalavra.isPresent()) {
                 var productUpdate = optionalPalavra.get();

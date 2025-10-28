@@ -14,8 +14,7 @@ import java.util.UUID;
 @Service
 public class EtiquetaService {
 
-
-    private EtiquetaRepository etiquetaRepository;
+    private final EtiquetaRepository etiquetaRepository;
 
     @Transactional(readOnly = true)
     public List<Etiqueta> listarTodas() {

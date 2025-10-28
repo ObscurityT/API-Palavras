@@ -3,6 +3,7 @@ package com.amandamariana.apipalavras.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name="etiquetas")
@@ -23,5 +24,5 @@ public class Etiqueta {
     private String nome;
 
     @ManyToMany(mappedBy = "etiquetas")
-    private Set<Palavra> palavras;
+    private Set<Palavra> palavras = new HashSet<>();
 }
