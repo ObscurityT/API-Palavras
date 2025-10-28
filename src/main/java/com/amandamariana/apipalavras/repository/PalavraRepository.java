@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PalavraRepository extends JpaRepository<Palavra, Long> {
+    boolean existsByTermo(String termo);
 }

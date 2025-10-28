@@ -2,13 +2,18 @@ package com.amandamariana.apipalavras.services;
 
 import com.amandamariana.apipalavras.model.DTOs.PalavraRequestDTO;
 import com.amandamariana.apipalavras.model.DTOs.PalavraResponseDTO;
+import com.amandamariana.apipalavras.model.Etiqueta;
 import com.amandamariana.apipalavras.model.Palavra;
+import com.amandamariana.apipalavras.repository.EtiquetaRepository;
 import com.amandamariana.apipalavras.repository.PalavraRepository;
-import org.springframework.beans.BeanUtils;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,18 +21,19 @@ public class PalavraService {
     @Autowired
     PalavraRepository palavraRepository;
 
-    public PalavraResponseDTO createPalavra(PalavraRequestDTO data) {
-        Palavra novaPalavra = new Palavra();
-        BeanUtils.copyProperties(data, novaPalavra);
-        Palavra saved = palavraRepository.save(novaPalavra);
-        return PalavraResponseDTO.fromEntity(saved);
-    }
+    @Autowired
+    EtiquetaRepository etiquetaRepository;
 
-    public PalavraResponseDTO createPalavra(PalavraRequestDTO data) {
+    @Transactional
+    public PalavraResponseDTO criarPalavra(PalavraRequestDTO data) {
+
+        if (palavraRepository.existsByTermo(data.termo())) {
+            throw new IllegalArgumentException("Já existe uma palavra com esse termo.");
+        }
+
         Palavra novaPalavra = new Palavra();
         novaPalavra.setTermo(data.termo());
 
-        // Se o usuário mandou etiquetas, busca e adiciona
         if (data.etiquetas() != null && !data.etiquetas().isEmpty()) {
             Set<Etiqueta> etiquetas = new HashSet<>(etiquetaRepository.findAllById(data.etiquetas()));
             novaPalavra.setEtiquetas(etiquetas);
@@ -43,5 +49,10 @@ public class PalavraService {
         return palavras.stream()
                 .map(PalavraResponseDTO::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    public PalavraResponseDTO getPalavraId(Long id){
+        Palavra palavraEncontrada = palavraRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Palavra não encontrada com id: " + id));
+        return PalavraResponseDTO.fromEntity(palavraEncontrada);
     }
 }
