@@ -1,7 +1,8 @@
 package com.amandamariana.apipalavras.services;
 
 import com.amandamariana.apipalavras.model.Etiqueta;
-import com.amandamariana.apipalavras.repository.etiquetaRepository;
+import com.amandamariana.apipalavras.repository.EtiquetaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,11 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
-public class etiquetaService {
+public class EtiquetaService {
 
 
-    private etiquetaRepository etiquetaRepository;
+    private EtiquetaRepository etiquetaRepository;
 
     @Transactional(readOnly = true)
     public List<Etiqueta> listarTodas() {
@@ -25,10 +27,18 @@ public class etiquetaService {
         return etiquetaRepository.save(etiqueta);
     }
 
-    public Etiqueta deletar(Etiqueta etiqueta)
+    public void deletarPorNome(String nome)
     {
-        return etiquetaRepository.delete(etiqueta);
+        Etiqueta etiqueta = etiquetaRepository.findByNome(nome)
+                .orElseThrow(() -> new RuntimeException("Etiqueta não encontranda" + nome));
     }
 
 
+    public Etiqueta atualizarPorNome(String nome, Etiqueta etiqueta) {
+        Etiqueta existente = etiquetaRepository.findByNome(nome)
+                .orElseThrow(() -> new RuntimeException("Etiqueta não encontrada: " + nome));
+
+        existente.setNome(etiqueta.getNome());
+        return  etiquetaRepository.save(existente);
+    }
 }
