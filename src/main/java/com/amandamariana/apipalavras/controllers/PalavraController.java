@@ -43,33 +43,30 @@ public class PalavraController {
             PalavraResponseDTO created = palavraService.criarPalavra(data);
             return ResponseEntity.status(HttpStatus.CREATED).body(created);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao criar palavra: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar palavra: " + e.getMessage());
         }
     }
 
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity updatePalavra(@PathVariable(value="id") Long id, @RequestBody @Valid PalavraRequestDTO data) {
-//        if(id.equals(data.id())){
-//            Optional<Palavra> optionalPalavra = palavraRepository.findById(id);
-//            if (optionalPalavra.isPresent()) {
-//                var productUpdate = optionalPalavra.get();
-//                BeanUtils.copyProperties(data, productUpdate);
-//                return ResponseEntity.status(HttpStatus.OK).body(palavraRepository.save(productUpdate));
-//            } else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Palavra de id %s nao encontrado!".formatted(id));
-//            }
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O Id do parâmetro não é o mesmo do body");
-//    }
-//
-//    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity deletePalavra(@PathVariable(value = "id")Long id){
-//        Optional<Palavra> optionalPalavra = palavraRepository.findById(id);
-//        if (optionalPalavra.isPresent()) {
-//            palavraRepository.delete( optionalPalavra.get());
-//            return ResponseEntity.status(HttpStatus.OK).body("Palavra deletada corretamente");
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Palavra de id %s nao encontrado!".formatted(id));
-//    }
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<?> updatePalavra(@PathVariable(value = "id") Long id, @RequestBody @Valid PalavraRequestDTO data) {
+        try {
+            PalavraResponseDTO atualizada = palavraService.atualizaPalavra(id, data);
+            return ResponseEntity.status(HttpStatus.OK).body(atualizada);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao atualizar palavra: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<?> deletePalavra(@PathVariable(value = "id") Long id) {
+        try {
+            palavraService.deletarPalavra(id);
+            return ResponseEntity.status((HttpStatus.OK)).body("Palavra deletada com sucesso!");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao deletar palavra: " + e.getMessage());
+        }
+    }
 }

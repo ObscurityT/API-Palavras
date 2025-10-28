@@ -44,15 +44,58 @@ public class PalavraService {
     }
 
 
-    public List<PalavraResponseDTO> getTodasPalavras(){
+    public List<PalavraResponseDTO> getTodasPalavras() {
         List<Palavra> palavras = palavraRepository.findAll();
         return palavras.stream()
                 .map(PalavraResponseDTO::fromEntity)
                 .collect(Collectors.toList());
     }
 
-    public PalavraResponseDTO getPalavraId(Long id){
+    public PalavraResponseDTO getPalavraId(Long id) {
         Palavra palavraEncontrada = palavraRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Palavra não encontrada com id: " + id));
         return PalavraResponseDTO.fromEntity(palavraEncontrada);
+    }
+
+    public PalavraResponseDTO atualizaPalavra(Long id, PalavraRequestDTO data) {
+        Palavra palavraEncontrada = palavraRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Palavra não encontrada com id: " + id));
+        //se a palavra dos dados nao eh nula e a palavra dos dados eh diferente a palavra atual
+        if (data.termo() != null && !data.termo().equalsIgnoreCase(palavraEncontrada.getTermo())) {
+            //procura se existe outra palavra com nome igual
+            if (palavraRepository.existsByTermo(data.termo())) {
+                throw new IllegalArgumentException("Já existe uma palavra com esse termo.");
+            }
+            // se não, pode atualizar
+            palavraEncontrada.setTermo(data.termo());
+        }
+
+        //se existir etiquetas nos dados
+        if (data.etiquetas() != null) {
+            //se a lista estiver vazia
+            if (data.etiquetas().isEmpty()) {
+                //entao é para apagar as etiquetas que existiam na palavra
+                palavraEncontrada.getEtiquetas().clear();
+            } else {
+                //se não, atualiza as novas etiquetas na palavra
+                Set<Etiqueta> novasEtiquetas = new HashSet<>(etiquetaRepository.findAllById(data.etiquetas()));
+
+                if (novasEtiquetas.size() != data.etiquetas().size()) {
+                    throw new IllegalArgumentException("Uma ou mais etiquetas informadas não existem.");
+                }
+
+                palavraEncontrada.setEtiquetas(novasEtiquetas);
+            }
+        }
+
+        Palavra palavraAtualizada = palavraRepository.save(palavraEncontrada);
+        return PalavraResponseDTO.fromEntity(palavraAtualizada);
+    }
+
+    @Transactional
+    public void deletarPalavra(Long id){
+        Palavra palavraEncontrada = palavraRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Palavra não encontrada com id: " + id));
+
+        palavraRepository.delete(palavraEncontrada);
     }
 }
