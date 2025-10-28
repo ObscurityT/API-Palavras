@@ -3,6 +3,7 @@ package com.amandamariana.apipalavras.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name="palavras")
@@ -25,5 +26,5 @@ public class Palavra {
             joinColumns = @JoinColumn(name = "palavra_id"),
             inverseJoinColumns = @JoinColumn(name = "etiqueta_id")
     )
-    private Set<Etiqueta> etiquetas;
+    private Set<Etiqueta> etiquetas= new HashSet<>();;
 }
