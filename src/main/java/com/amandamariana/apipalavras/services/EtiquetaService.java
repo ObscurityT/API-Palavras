@@ -2,11 +2,13 @@ package com.amandamariana.apipalavras.services;
 
 import com.amandamariana.apipalavras.model.DTOs.EtiquetaRequestDTO;
 import com.amandamariana.apipalavras.model.Etiqueta;
+import com.amandamariana.apipalavras.model.Palavra;
 import com.amandamariana.apipalavras.repository.EtiquetaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -32,7 +34,7 @@ public class EtiquetaService {
     public void deletarPorNome(String nome)
     {
         Etiqueta etiqueta = etiquetaRepository.findByNome(nome)
-                .orElseThrow(() -> new RuntimeException("Etiqueta não encontranda" + nome));
+                .orElseThrow(() -> new RuntimeException("Etiqueta não encontrada " + nome));
 
         etiquetaRepository.delete(etiqueta);
     }
@@ -40,9 +42,21 @@ public class EtiquetaService {
 
     public Etiqueta atualizarPorNome(String nome, EtiquetaRequestDTO etiquetaDto) {
       Etiqueta etiqueta = etiquetaRepository.findByNome(nome)
-              .orElseThrow(()-> new RuntimeException("Etiqueta não encontrada"));
+              .orElseThrow(()-> new RuntimeException("Etiqueta não encontrada " + nome));
 
         etiqueta.setNome(etiquetaDto.nome());
         return  etiquetaRepository.save(etiqueta);
+    }
+
+    public Etiqueta buscarPorID(Long id) {
+        return etiquetaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Etiqueta não encontrada com o id: " + id));
+    }
+
+    public List<Palavra> buscarPalavrasPorEtiqueta(String nome) {
+        Etiqueta etiqueta = etiquetaRepository.findByNome(nome)
+                .orElseThrow(()-> new RuntimeException("Etiqueta não encontrada " + nome));
+
+        return new ArrayList<>(etiqueta.getPalavras());
     }
 }

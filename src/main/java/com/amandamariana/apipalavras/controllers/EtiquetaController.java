@@ -2,7 +2,9 @@ package com.amandamariana.apipalavras.controllers;
 
 import com.amandamariana.apipalavras.model.DTOs.EtiquetaRequestDTO;
 import com.amandamariana.apipalavras.model.DTOs.EtiquetaResponseDTO;
+import com.amandamariana.apipalavras.model.DTOs.PalavraResponseDTO;
 import com.amandamariana.apipalavras.model.Etiqueta;
+import com.amandamariana.apipalavras.model.Palavra;
 import com.amandamariana.apipalavras.services.EtiquetaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,21 @@ public class EtiquetaController {
                         .stream()
                                 .map(e-> new EtiquetaResponseDTO(e.getId(), e.getNome())).toList();
         return ResponseEntity.ok(etiquetas);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EtiquetaResponseDTO> getEtiquetaPorId(@PathVariable Long id) {
+        Etiqueta etiqueta = etiquetaService.buscarPorID(id);
+        EtiquetaResponseDTO response = new EtiquetaResponseDTO(etiqueta.getId(), etiqueta.getNome());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{nome}/palavras")
+    public ResponseEntity<List<PalavraResponseDTO>>getEtiquetaPorPalavras(@PathVariable String nome) {
+        List<Palavra> palavras = etiquetaService.buscarPalavrasPorEtiqueta(nome);
+        List<PalavraResponseDTO> response = palavras.stream()
+                .map(p -> new PalavraResponseDTO(p.getId(), p.getTermo())).toList();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
