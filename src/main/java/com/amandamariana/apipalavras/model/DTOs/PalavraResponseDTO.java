@@ -1,4 +1,4 @@
 package com.amandamariana.apipalavras.model.DTOs;
 
-public class PalavraResponseDTO {
+public record PalavraResponseDTO(Long id,String termo) {
 }
