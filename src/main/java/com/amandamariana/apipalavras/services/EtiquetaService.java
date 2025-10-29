@@ -53,10 +53,8 @@ public class EtiquetaService {
                 .orElseThrow(() -> new RuntimeException("Etiqueta não encontrada com o id: " + id));
     }
 
-    public List<Palavra> buscarPalavrasPorEtiqueta(String nome) {
-        Etiqueta etiqueta = etiquetaRepository.findByNome(nome)
+    public Etiqueta buscarPalavrasPorEtiqueta(String nome) {
+        return etiquetaRepository.findByNome(nome)
                 .orElseThrow(()-> new RuntimeException("Etiqueta não encontrada " + nome));
-
-        return new ArrayList<>(etiqueta.getPalavras());
     }
 }

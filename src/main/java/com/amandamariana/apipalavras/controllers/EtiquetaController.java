@@ -1,5 +1,6 @@
 package com.amandamariana.apipalavras.controllers;
 
+import com.amandamariana.apipalavras.model.DTOs.EtiquetaComPalavrasResponseDTO;
 import com.amandamariana.apipalavras.model.DTOs.EtiquetaRequestDTO;
 import com.amandamariana.apipalavras.model.DTOs.EtiquetaResponseDTO;
 import com.amandamariana.apipalavras.model.DTOs.PalavraResponseDTO;
@@ -37,10 +38,9 @@ public class EtiquetaController {
     }
 
     @GetMapping("/{nome}/palavras")
-    public ResponseEntity<List<PalavraResponseDTO>>getEtiquetaPorPalavras(@PathVariable String nome) {
-        List<Palavra> palavras = etiquetaService.buscarPalavrasPorEtiqueta(nome);
-        List<PalavraResponseDTO> response = palavras.stream()
-                .map(p -> new PalavraResponseDTO(p.getId(), p.getTermo())).toList();
+    public ResponseEntity<EtiquetaComPalavrasResponseDTO>getEtiquetaPorPalavras(@PathVariable String nome) {
+       Etiqueta etiqueta = etiquetaService.buscarPalavrasPorEtiqueta(nome);
+       EtiquetaComPalavrasResponseDTO response = EtiquetaComPalavrasResponseDTO.fromEntity(etiqueta);
         return ResponseEntity.ok(response);
     }
 
