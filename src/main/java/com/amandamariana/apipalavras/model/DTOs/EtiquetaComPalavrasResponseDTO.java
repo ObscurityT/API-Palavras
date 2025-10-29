@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 
 public record EtiquetaComPalavrasResponseDTO(Long id,
                                              String nome,
-                                             Set<String> palavras) {
+                                             Set<PalavraResponseDTO> palavras) {
 
     public static EtiquetaComPalavrasResponseDTO fromEntity(Etiqueta etiqueta) {
-        Set<String> nomesPalavras = etiqueta.getPalavras().stream()
-                .map(Palavra::getTermo)
+        Set<PalavraResponseDTO> nomesPalavras = etiqueta.getPalavras().stream()
+                .map(PalavraResponseDTO::fromEntity)
                 .collect(Collectors.toSet());
 
         return new EtiquetaComPalavrasResponseDTO(etiqueta.getId(), etiqueta.getNome(), nomesPalavras);

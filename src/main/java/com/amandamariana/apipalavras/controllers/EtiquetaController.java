@@ -38,10 +38,13 @@ public class EtiquetaController {
     }
 
     @GetMapping("/{nome}/palavras")
-    public ResponseEntity<EtiquetaComPalavrasResponseDTO>getEtiquetaPorPalavras(@PathVariable String nome) {
+    public ResponseEntity<EtiquetaComPalavrasResponseDTO>getPalavrasPorEtiqueta(@PathVariable String nome) {
        Etiqueta etiqueta = etiquetaService.buscarPalavrasPorEtiqueta(nome);
-       EtiquetaComPalavrasResponseDTO response = EtiquetaComPalavrasResponseDTO.fromEntity(etiqueta);
-        return ResponseEntity.ok(response);
+       if(etiqueta == null)
+       {
+           return ResponseEntity.notFound().build();
+       }
+       return ResponseEntity.ok(EtiquetaComPalavrasResponseDTO.fromEntity(etiqueta));
     }
 
     @PostMapping

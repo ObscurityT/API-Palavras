@@ -1,9 +1,11 @@
 package com.amandamariana.apipalavras.controllers;
 
 import com.amandamariana.apipalavras.model.DTOs.EtiquetaResponseDTO;
+import com.amandamariana.apipalavras.model.DTOs.PalavraComEtiquetasResponseDTO;
 import com.amandamariana.apipalavras.model.DTOs.PalavraRequestDTO;
 import com.amandamariana.apipalavras.model.DTOs.PalavraResponseDTO;
 import com.amandamariana.apipalavras.model.Etiqueta;
+import com.amandamariana.apipalavras.model.Palavra;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +44,11 @@ public class PalavraController {
     }
 
     @GetMapping("/{termo}/etiquetas")
-    public ResponseEntity<List<EtiquetaResponseDTO>> getPalavrasPorEtiquetas(@PathVariable String termo)
+    public ResponseEntity<PalavraComEtiquetasResponseDTO> getEtiquetasPorPalavras(@PathVariable String termo)
     {
-        List<Etiqueta> etiquetas = palavraService.buscarEtiquetasPorPalavra(termo);
-        List<EtiquetaResponseDTO> response = etiquetas.stream()
-                .map(e-> new EtiquetaResponseDTO(e.getId(), e.getNome())).toList();
-
-        return ResponseEntity.ok(response);
+        Palavra palavra = palavraService.buscarEtiquetasPorPalavra(termo);
+        if(palavra == null){return ResponseEntity.notFound().build();}
+        return ResponseEntity.ok(PalavraComEtiquetasResponseDTO.fromEntity(palavra));
     }
 
     @PostMapping("/criar")

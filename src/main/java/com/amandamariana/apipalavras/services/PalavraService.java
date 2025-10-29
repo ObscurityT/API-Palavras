@@ -100,9 +100,8 @@ public class PalavraService {
         palavraRepository.delete(palavraEncontrada);
     }
 
-    public List<Etiqueta> buscarEtiquetasPorPalavra(String termo) {
-        Palavra palavra = palavraRepository.findByTermo(termo)
-                .orElseThrow(() -> new RuntimeException("Palavra não encontrada: " + termo));
-        return new ArrayList<>(palavra.getEtiquetas());
+    public Palavra buscarEtiquetasPorPalavra(String termo) {
+        return palavraRepository.findByTermo(termo)
+                .orElseThrow(()-> new RuntimeException("Palavra não encontrada " + termo));
     }
 }
