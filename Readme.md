@@ -27,8 +27,6 @@ ___
     Acesso usuario apenas para leituras (o que inclui as listas)
 
 ✔️ O que mais a dupla desejar fazer
-
-____
-____
+___
 #### Links úteis
 - [Guia Mega Prático - Git](https://rogerdudler.github.io/git-guide/index.pt_BR.html)
