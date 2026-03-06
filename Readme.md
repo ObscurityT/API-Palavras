@@ -29,12 +29,6 @@ ___
 ✔️ O que mais a dupla desejar fazer
 
 ____
-
-**⚠️ De tempos em tempos farei alguma alteração no Readme do projeto.... ⚠️**
-
-**Não deixem de atualizar sua branch**
-**teste**
 ____
 #### Links úteis
 - [Guia Mega Prático - Git](https://rogerdudler.github.io/git-guide/index.pt_BR.html)
-- [Curso de Git Para Iniciantes - Youtube](https://www.youtube.com/watch?v=WVLhm1AMeYE&list=PLInBAd9OZCzzHBJjLFZzRl6DgUmOeG3H0)

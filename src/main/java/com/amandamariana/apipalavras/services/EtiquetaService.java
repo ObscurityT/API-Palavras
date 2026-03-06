@@ -2,7 +2,6 @@ package com.amandamariana.apipalavras.services;
 
 import com.amandamariana.apipalavras.model.DTOs.EtiquetaRequestDTO;
 import com.amandamariana.apipalavras.model.Etiqueta;
-import com.amandamariana.apipalavras.model.Palavra;
 import com.amandamariana.apipalavras.repository.EtiquetaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
