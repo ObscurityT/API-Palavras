@@ -22,6 +22,7 @@ public class EtiquetaController {
 
     private final EtiquetaService etiquetaService;
 
+
     @GetMapping
     public ResponseEntity<List<EtiquetaResponseDTO>> listar() {
         List<EtiquetaResponseDTO> etiquetas = etiquetaService.listarTodas()
